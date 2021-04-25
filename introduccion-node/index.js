@@ -1,4 +1,5 @@
-const express = require("express");
+//const express = require("express");
+import express from "express";
 const app = express();
 app.use(express.json());
 
@@ -57,10 +58,10 @@ app.delete("/api/persons/:id", (request, response) => {
 
 app.post("/api/persons", (request, response) => {
   const body = request.body;
-  const unique = persons.filter(persona => {
-      return persona.name == body.name;
-  })
-  
+  const unique = persons.filter((persona) => {
+    return persona.name == body.name;
+  });
+
   if (!body.name) {
     return response.status(400).json({
       error: "name missing",
@@ -76,12 +77,11 @@ app.post("/api/persons", (request, response) => {
       error: "number and name missings",
     });
   }
-  if(unique.length > 0){
+  if (unique.length > 0) {
     return response.status(400).json({
-        error: "name must be unique",
-      });
+      error: "name must be unique",
+    });
   }
-
 
   const person = {
     id: ramdomid(100, 10000),
