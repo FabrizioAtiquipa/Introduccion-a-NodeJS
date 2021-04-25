@@ -25,16 +25,26 @@ let persons = [
 ]
 
 app.get('/info', (request, response) => {
-    let fechaHora=new Date()
-    let mensaje=`<h5>Phonebook has info for ${persons.length} people</h5>
-                 <p>${fechaHora}</p>`
+    const Fecha=new Date()
+    const vista=`<h5>Phonebook has info for ${persons.length} people</h5>
+                 <p>${Fecha}</p>`
 
-    response.send(mensaje)
+    response.send(vista)
 })
-
 
 app.get('/api/persons', (request, response) => {
     response.json(persons)
+})
+
+app.get('/api/persons/:id', (request, response) => {
+    const ID = request.params.id
+    const PersonaID = persons.find(person => person.id == ID)
+
+    if (PersonaID) {
+        response.json(PersonaID)
+    } else {
+        response.status(404).end()
+    }
 })
 
 const PORT = 3001
