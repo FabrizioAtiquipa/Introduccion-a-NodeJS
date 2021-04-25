@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+app.use(express.json());
 
 let persons = [
   {
@@ -53,6 +54,23 @@ app.delete("/api/persons/:id", (request, response) => {
 
   response.status(204).end();
 });
+
+app.post("/api/persons", (request, response) => {
+  const person = {
+    id: ramdomid(100, 10000),
+    name: request.body.name,
+    number: request.body.number,
+  };
+  console.log(person);
+  persons = persons.concat(person);
+  response.json(person);
+});
+
+function ramdomid(ini, fin) {
+  ini = Math.ceil(ini);
+  fin = Math.floor(fin);
+  return Math.floor(Math.random() * (fin - ini) + ini);
+}
 
 const PORT = 3001;
 app.listen(PORT, () => {
